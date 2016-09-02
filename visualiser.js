@@ -1,16 +1,17 @@
-// Initialise variables related to the audio element.
+// Initialise variables related to the audio player.
 let audioElement = document.getElementById('audio-player');
 let audioContext = new AudioContext();
 let audioSource = audioContext.createMediaElementSource(audioElement);
 let audioAnalyser = audioContext.createAnalyser();
 audioSource.connect(audioAnalyser);
 audioSource.connect(audioContext.destination);
+let scaler = document.getElementById('scaler');
+let scalerLabel = document.getElementById('scaler-label');
 
 // Initialise the waveform data.
 const dataPointCount = 1024;
 audioAnalyser.fftSize = dataPointCount;
 let waveformData = new Float32Array(dataPointCount);
-const amplitudeScaleFactor = 4.0;
 
 // Initialise variables related to the canvas.
 let canvas = document.getElementById('visualiser');
@@ -60,6 +61,10 @@ function renderFrame() {
 
 	// Scale the waveform amplitude such that volume is not a factor.
 	let volumeScaleFactor = (audioElement.volume > 0.01) ? (1.0 / audioElement.volume) : 1.0;
+	// Scale the waveform amplitude based on a user-adjustable slider.
+	let amplitudeScaleFactor = scaler.value / 100.0;
+	let newLabel = 'Amplitude Scale Factor: ' + amplitudeScaleFactor.toFixed(3);
+	if (scalerLabel.textContent != newLabel) scalerLabel.textContent = newLabel;
 
 	// Begin drawing to the canvas, first by saving the current canvas state.
 	canvasContext.save();
