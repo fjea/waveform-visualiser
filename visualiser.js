@@ -118,7 +118,7 @@ window.onresize = function(event) {
 	canvas.height = window.innerHeight;
 	// Blank the canvas with the black background colour.
 	canvasContext.save();
-	canvasContext.fillStyle = '#000000';
+	canvasContext.fillStyle = '#030408';
 	canvasContext.globalCompositeOperation = 'source-over';
 	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 	canvasContext.restore();
