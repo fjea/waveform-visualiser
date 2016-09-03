@@ -112,8 +112,12 @@ function renderFrame() {
 // Handle changes to the file input.
 let audioFileInput = document.getElementById('audio-file-input');
 function audioFileChanged() {
-	audioElement.src = URL.createObjectURL(audioFileInput.files[0]);
+	if (audioFileInput.files.length) {
+		audioElement.src = URL.createObjectURL(audioFileInput.files[0]);
+	}
 }
+// If a file is already specified from a previous page view, load it immediately.
+audioFileChanged();
 
 window.onresize = function(event) {
 	// Resize the canvas to match the new page size.
