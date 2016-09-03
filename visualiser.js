@@ -9,6 +9,7 @@ audioSource.connect(audioAnalyser);
 audioSource.connect(audioContext.destination);
 let scaler = document.getElementById('scaler');
 let scalerLabel = document.getElementById('scaler-label');
+let fullscreenButton = document.getElementById('fullscreen-button');
 let controls = document.getElementById('controls');
 
 // Initialise the waveform data.
@@ -159,6 +160,35 @@ function hideCursorAndControls() {
 }
 // Initialise the inactivity timer from the beginning.
 inactivityTimeout = setTimeout(hideCursorAndControls, inactivityTimeoutPeriod);
+
+// Handle the fullscreen toggle button across all supported modern browsers.
+fullscreenButton.onclick = function(event) {
+	if (   !document.fullscreenElement
+	    && !document.webkitFullscreenElement
+	    && !document.mozFullScreenElement
+	    && !document.msFullscreenElement)
+	{
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
+		} else if (document.documentElement.webkitRequestFullscreen) {
+			document.documentElement.webkitRequestFullscreen();
+		} else if (document.documentElement.mozRequestFullScreen) {
+			document.documentElement.mozRequestFullScreen();
+		} else if (document.documentElement.msRequestFullscreen) {
+			document.documentElement.msRequestFullscreen();
+		}
+	} else {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		}
+	}
+}
 
 // Start the rendering loop.
 window.requestAnimationFrame(renderFrame);
