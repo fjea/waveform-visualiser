@@ -9,6 +9,7 @@ audioSource.connect(audioAnalyser);
 audioSource.connect(audioContext.destination);
 let scaler = document.getElementById('scaler');
 let scalerLabel = document.getElementById('scaler-label');
+let controls = document.getElementById('controls');
 
 // Initialise the waveform data.
 const dataPointCount = 1024;
@@ -128,6 +129,33 @@ window.onresize = function(event) {
 
 // Resize the canvas to match the initial window size.
 window.onresize();
+
+// Hide the mouse cursor and controls if the mouse is stationary over the canvas for a while.
+let inactivityTimeout;
+const inactivityTimeoutPeriod = 2500;
+document.body.onmousemove = function(event) {
+	// The cursor has just moved, so display everything and reset the timeout.
+	if (document.documentElement.style.cursor != 'default') {
+		document.documentElement.style.cursor = 'default';
+	}
+	if (controls.style.display != '') {
+		controls.style.display = '';
+	}
+	clearTimeout(inactivityTimeout);
+	inactivityTimeout = setTimeout(hideCursorAndControls, inactivityTimeoutPeriod);
+}
+function hideCursorAndControls() {
+	// If the cursor is over the controls, don't hide anything -- reset the timer.
+	if (document.body.querySelector(':hover') == controls) {
+		inactivityTimeout = setTimeout(hideCursorAndControls, inactivityTimeoutPeriod);
+	// Otherwise, hide the cursor and controls via CSS.
+	} else {
+		document.documentElement.style.cursor = 'none';
+		controls.style.display = 'none';
+	}
+}
+// Initialise the inactivity timer from the beginning.
+inactivityTimeout = setTimeout(hideCursorAndControls, inactivityTimeoutPeriod);
 
 // Start the rendering loop.
 window.requestAnimationFrame(renderFrame);
