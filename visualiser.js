@@ -161,8 +161,8 @@ function hideCursorAndControls() {
 // Initialise the inactivity timer from the beginning.
 inactivityTimeout = setTimeout(hideCursorAndControls, inactivityTimeoutPeriod);
 
-// Handle the fullscreen toggle button across all supported modern browsers.
-fullscreenButton.onclick = function(event) {
+// Handle the fullscreen toggle across all supported modern browsers.
+function toggleFullscreen() {
 	if (   !document.fullscreenElement
 	    && !document.webkitFullscreenElement
 	    && !document.mozFullScreenElement
@@ -189,6 +189,9 @@ fullscreenButton.onclick = function(event) {
 		}
 	}
 }
+// Toggle fullscreen either via the dedicated button or double clicking the canvas.
+fullscreenButton.onclick = toggleFullscreen;
+canvas.ondblclick = toggleFullscreen;
 
 // Start the rendering loop.
 window.requestAnimationFrame(renderFrame);
