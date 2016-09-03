@@ -1,3 +1,5 @@
+'use strict';
+
 // Initialise variables related to the audio player.
 let audioElement = document.getElementById('audio-player');
 let audioContext = new AudioContext();
