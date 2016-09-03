@@ -130,7 +130,6 @@ window.onresize = function(event) {
 	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 	canvasContext.restore();
 }
-
 // Resize the canvas to match the initial window size.
 window.onresize();
 
