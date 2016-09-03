@@ -94,7 +94,7 @@ function renderFrame() {
 	}
 	canvasContext.fillStyle = '#EEFFEE';
 
-	// Add a shadow, as a blur.
+	// Add a shadow, as a glow effect.
 	canvasContext.shadowBlur = 8;
 	canvasContext.shadowColor = 'rgba(40%, 100%, 80%, 0.2)';
 
